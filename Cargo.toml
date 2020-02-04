@@ -1,0 +1,19 @@
+[package]
+name = "gitrelease"
+version = "0.1.0"
+authors = ["Hengfeng Li <hengf.li@gmail.com>"]
+edition = "2018"
+description = "gitrelease is a small CLI tool to generate a release summary."
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+git2 = "0.10"
+chrono = "0.4"
+time = "0.1.39"
+regex = "1"
+lazy_static = "1.4.0"
+docopt = "1"
+serde = { version = "1", features = ["derive"] }
+
