@@ -14,7 +14,6 @@ homepage = "https://github.com/hengfengli/gitrelease"
 [dependencies]
 git2 = "0.10"
 chrono = "0.4"
-time = "0.1.39"
 regex = "1"
 lazy_static = "1.4.0"
 docopt = "1"
