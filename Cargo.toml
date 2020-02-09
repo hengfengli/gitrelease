@@ -5,6 +5,9 @@ authors = ["Hengfeng Li <hengf.li@gmail.com>"]
 edition = "2018"
 description = "gitrelease is a small CLI tool to generate a release summary."
 license = "MIT"
+documentation = "https://docs.rs/gitrelease/0.1.0/gitrelease"
+repository = "https://github.com/hengfengli/gitrelease"
+homepage = "https://github.com/hengfengli/gitrelease"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
