@@ -4,6 +4,9 @@ history and creates a nice summary of changes since last release
 
 Please note that this is a toy project just for learning rust.
 
+[![Crates.io](https://img.shields.io/crates/v/gitrelease)](https://crates.io/crates/gitrelease)
+[![Crates.io](https://img.shields.io/crates/l/gitrelease)](LICENSE)
+
 ### Quick example
 
 1. Here is a full working example.
