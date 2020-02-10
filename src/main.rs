@@ -20,7 +20,7 @@ static NAME: &str = "gitrelease";
 static VERSION: &str = env!("CARGO_PKG_VERSION");
 
 lazy_static! {
-    static ref VERSION_REGEX: Regex = Regex::new(r"^(\d+)\.(\d+)\.(\d+)(-\w+)?(-SNAPSHOT)?$").unwrap();
+    static ref VERSION_REGEX: Regex = Regex::new(r"^v?(\d+)\.(\d+)\.(\d+)(-\w+)?(-SNAPSHOT)?$").unwrap();
     static ref GITHUB_URL_REGEX: Regex = Regex::new(r"^git@([\w.]*):([\w/-]*)\.git$").unwrap();
 }
 
@@ -164,11 +164,6 @@ fn get_header(commits: &Vec<Commit>, last_tag: &Tag, submodule: &str) -> String 
     let mut result = String::from("");
 
     let version: &str = last_tag.name.split('/').last().expect("Couldn't find the version.");
-    let version = match version.chars().next().expect("Couldn't read the next char from version.") {
-        'v' => &version[1..],
-        _ => version
-    };
-
 
     let mut version = Version::parse(version).expect("Couldn't parse the version string.");
     let date = chrono::Local::now();
@@ -187,7 +182,7 @@ fn get_header(commits: &Vec<Commit>, last_tag: &Tag, submodule: &str) -> String 
 }
 
 /// A semantic version.
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 struct Version {
     major: i32,
     minor: i32,
@@ -333,6 +328,53 @@ fn find_origin_remote_url(repo: &Repository) -> String {
     }
     let cap = GITHUB_URL_REGEX.captures_iter(origin_url).next().expect("Failed to read origin url.");
 	format!("https://{}/{}", &cap[1], &cap[2])
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn version_parse() {
+        let want = Version{major: 0, minor: 1, patch: 0, extra: String::new(), snapshot: false};
+        let got = Version::parse("v0.1.0").unwrap();
+        assert_eq!(got, want);
+
+        let got = Version::parse("0.1.0").unwrap();
+        assert_eq!(got, want);
+
+        let got = Version::parse("x0.1.0");
+        assert_eq!(got, None);
+    }
+
+    #[test]
+    fn version_bump() {
+        let mut version = Version::parse("v0.1.0").unwrap();
+
+        version.bump("major");
+        let want = Version{major: 1, minor: 0, patch: 0, extra: String::new(), snapshot: false};
+        assert_eq!(version, want);
+
+        version.bump("minor");
+        let want = Version{major: 1, minor: 1, patch: 0, extra: String::new(), snapshot: false};
+        assert_eq!(version, want);
+
+        version.bump("patch");
+        let want = Version{major: 1, minor: 1, patch: 1, extra: String::new(), snapshot: false};
+        assert_eq!(version, want);
+
+        version.bump("wrong_type");
+        let want = Version{major: 1, minor: 1, patch: 1, extra: String::new(), snapshot: false};
+        assert_eq!(version, want);
+    }
+
+    #[test]
+    fn version_to_string() {
+        let version = Version::parse("v0.1.0").unwrap();
+
+        assert_eq!(version.to_string(), "0.1.0");
+    }
+
 }
 
 const USAGE: &'static str = "
