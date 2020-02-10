@@ -6,7 +6,7 @@ Please note that this is a toy project just for learning rust.
 
 [![Crates.io](https://img.shields.io/crates/v/gitrelease)](https://crates.io/crates/gitrelease)
 [![Crates.io](https://img.shields.io/crates/l/gitrelease)](LICENSE)
-[![Build status](https://api.travis-ci.org/hengfengli/gitrelease)](https://travis-ci.org/hengfengli/gitrelease)
+[![Build status](https://api.travis-ci.org/hengfengli/gitrelease.svg)](https://travis-ci.org/hengfengli/gitrelease)
 
 ### Quick example
 
