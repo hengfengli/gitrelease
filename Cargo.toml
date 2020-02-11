@@ -1,6 +1,6 @@
 [package]
 name = "gitrelease"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Hengfeng Li <hengf.li@gmail.com>"]
 edition = "2018"
 description = "gitrelease is a small CLI tool to generate a release summary."
